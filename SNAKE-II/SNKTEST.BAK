@@ -1,0 +1,94 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+
+#define sncol 9
+
+int count,xw,yw;
+struct snake
+{
+ int x1,y1,x2,y2;
+ int dir;
+}snk[300];
+
+void draw_snake();
+void animate(int);
+void clear_trail();
+
+void main()
+{
+ int gd=0,gm,ax1,ay1,ax2,ay2,i;
+ i=0;
+ xw=5;
+ yw=5;
+ ax1=20;
+ ay1=200;
+ ax2=ax1+xw;
+ ay2=ay1+yw;
+
+ initgraph(&gd,&gm," ");
+
+ while(i<5)
+ {
+  snk[i].x1=ax1;
+  snk[i].y1=ay1;
+  snk[i].x2=ax2;
+  snk[i].y2=ay2;
+  ax1=ax1+xw;
+  ax2=ax2+xw;
+  i++;
+  count++;
+ }
+ draw_snake();
+ getch();
+ animate(20);
+}
+void draw_snake()
+{
+ int i;
+ i=0;
+ while(i<count)
+ {
+  setcolor(sncol);
+  rectangle(snk[i].x1,snk[i].y1,snk[i].x2,snk[i].y2);
+  setfillstyle(1,sncol);
+  floodfill(snk[i].x1+2,snk[i].y1+2,sncol);
+  i++;
+ }
+}
+void animate(int m)
+{
+ int temx1,temy1,temx2,temy2,j,k;
+ k=0;
+ j=count;
+ while(k<m)
+ {
+  j=count;
+  while(j>=0)
+  {
+    snk[j].x1=snk[j].x1+xw;
+    snk[j].x2=snk[j].x2+xw;
+
+    j--;
+   clear_trail();
+  }
+  draw_snake();
+  delay(400);
+  k++;
+ }
+}
+void clear_trail()
+{
+ int i;
+ i=0;
+ while(i<count)
+ {
+  setcolor(1);
+  rectangle(snk[0].x1,snk[0].y1,snk[0].x2,snk[0].y2);
+  setfillstyle(1,0);
+  floodfill(snk[0].x1+2,snk[0].y1+2,1);
+  setcolor(0);
+  rectangle(snk[0].x1,snk[0].y1,snk[0].x2,snk[0].y2);
+  i++;
+ }
+}

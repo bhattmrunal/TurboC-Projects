@@ -1,0 +1,96 @@
+#include<dos.h>
+#include<conio.h>
+#include<stdio.h>
+#include<mouse.h>
+#include<graphics.h>
+//union REGS r;
+#define BGCOLOR 6
+#define BORDER 14
+
+struct icon_type {
+  unsigned int image[40][34];//icon image
+  unsigned char text[12];//icon text
+  void (*func)();/*pointer to function associated
+		  with each icon*/
+  int ix,iy; //X,Y coordinates
+  }icon[10];
+char *file_names[]={"tcup.chn","partition.chn","chin.chn","dipak.chn"};
+int run;
+
+void video_mode(int);
+void putpoint(int,int,int,int);
+int load_icons();
+
+void main()
+{
+ int gd=0,gm,x,y,test,ms;
+
+ x=100;y=100;
+ run=1;
+ initgraph(&gd,&gm," ");
+ setcolor(BORDER);
+ rectangle(0,1,getmaxx()-3,getmaxy()-3);
+ rectangle(1,2,getmaxx()-4,getmaxy()-4);
+ setfillstyle(1,BGCOLOR);
+   floodfill(230,300,BORDER);
+ test=load_icons();
+ ms=initmouse();
+ showmouse();
+ getch();
+}// end of main
+void putpoint(int x,int y,int color,int how)
+{
+ union REGS r;
+ if(how==0x18) color=color | 128;
+ r.h.bh=0;
+ r.h.ah=12;
+ r.h.al=color;
+ r.x.dx=y;
+ r.x.cx=x;
+ int86(16,&r,&r);
+}
+int load_icons()
+{
+ int i=0,icx,icy,color,posx,posy,len;
+ FILE *fp;
+ for(i=0;i<4;i++)
+ {
+  if((fp=fopen(file_names[i],"rb"))==NULL)
+   {
+    printf("Cannot open file %s \n",file_names[i]);
+    return 0;
+   }
+   fread(&icon[i],sizeof(struct icon_type),1,fp);
+   if(run==1)
+   {
+    posx=30;
+    posy=20;
+    run++;
+   }
+   else
+   {
+    posx=posx;
+    posy=posy+60;
+   }
+
+   for(icy=0;icy<34;icy++)
+   {
+    for(icx=0;icx<40;icx++)
+    {
+     color=icon[i].image[icx][icy];
+     if(color!=33)
+     {
+      putpoint(posx+icx,posy+icy,color,0);
+     }
+    }
+   }
+   if(icon[i].text!=NULL)
+   {
+    len=strlen(icon[i].text);
+    settextstyle(0,0,0);
+    setcolor(0);
+    outtextxy(posx-(len*2)+7,posy+37,icon[i].text);
+   }
+  }
+ return 0;
+}

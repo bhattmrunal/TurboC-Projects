@@ -1,0 +1,35 @@
+/*
+  THIS SIMULATOR IS DESIGNED AND PROGRAMMED BY MRUNAL BHATT.
+  FOR PROGRAMS PLEASE CONTACT
+
+  1> Mob.+919822693522
+  2>E-mail "bhattmrunal@yahoo.co.in"
+*/
+
+/* HEADER FILES & SUPPORTED FILES DECLARED */
+#include<iostream.h>
+#include<conio.h>
+#include<graphics.h>
+#include<dos.h>
+#include<bios.h>
+#include<stdlib.h>
+#include<process.h>
+#include<time.h>
+#include<alloc.h>
+#include"d:\tc\simmouse.cpp"
+/* END OF HEADER FILES */
+
+/* MACROS DEFINED */
+
+#define BTCOLOR 12
+#define BTBORDER 4
+#define TXTCOLOR 1
+#define BGCOLOR 9
+#define TXTBGCOLOR 13
+
+#define btsz
+
+
+
+
+

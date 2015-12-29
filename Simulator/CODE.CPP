@@ -1,0 +1,198 @@
+#include<stdio.h>
+#include<conio.h>
+#include<ctype.h>
+#include<math.h>
+#include<process.h>
+#include<graphics.h>
+#include"d:\myimpc~1\simula~1\simulato.cpp"
+
+/* VARIABLES FOR SIMULATOR */
+//unsigned short int memory[16][16][16][5],*ptr;
+int A,B,C,D,E,H,L;
+int cy,s,ax,z,p;
+int sp,stop;
+int pc;
+/*END OF VARIABLES */
+
+void MOV(int mx,int my)
+{
+ int btcount;
+ char mv[2];
+ btcount=0;
+ x=408;
+ //printf("%d",pc);
+ y=65;
+ outtextxy(x,y,"0000");
+ x=445;
+ outtextxy(x,y,"MOV");
+ display(15);
+ regframe(14);
+ x=485;
+ while(btcount<2)
+ {
+  mousepos(&mx,&my);
+  int bt;
+  bt=0;
+  if(ltbutton()==1)
+  {
+   if(mx>10&&mx<25&&my>50&&my<64&&bt!=1)
+   {
+    pushbutton(10,50,25,64,"A",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(10,50,25,64,"A",BTCOLOR,BTBORDER,TXTCOLOR);
+    setmousepos(mx,my);
+    outtextxy(x,y,"A");
+    mv[btcount]='A';
+    x=x+10;
+    bt=1;
+    delay(100);
+    btcount++;
+   }
+   if(mx>40&&mx<55&&my>50&&my<64&&bt!=2)
+   {
+    pushbutton(40,50,55,64,"B",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(40,50,55,64,"B",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    outtextxy(x,y,"B");
+    mv[btcount]='B';
+    x=x+10;
+    bt=2;
+    delay(100);
+    btcount++;
+   }
+   if(mx>65&&mx<80&&my>50&&my<64&&bt!=3)
+   {
+    pushbutton(65,50,80,64,"C",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(65,50,80,64,"C",BTCOLOR,BTBORDER,TXTCOLOR);
+    outtextxy(x,y,"C");
+    delay(100);
+    mv[btcount]='C';
+    x=x+10;
+    bt=3;
+    delay(100);
+    btcount++;
+   }
+   if(mx>95&&mx<110&&my>50&&my<64&&bt!=4)
+   {
+    pushbutton(95,50,110,64,"D",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(95,50,110,64,"D",BTCOLOR,BTBORDER,TXTCOLOR);
+    outtextxy(x,y,"D");
+    delay(100);
+    mv[btcount]='D';
+    x=x+10;
+    bt=4;
+    delay(100);
+    btcount++;
+   }
+   if(mx>120&&mx<135&&my>50&&my<64&&bt!=5)
+   {
+    pushbutton(120,50,135,64,"E",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(120,50,135,64,"E",BTCOLOR,BTBORDER,TXTCOLOR);
+    outtextxy(x,y,"E");
+    delay(100);
+    mv[btcount]='E';
+    x=x+10;
+    bt=5;
+    delay(100);
+    btcount++;
+   }
+   if(mx>150&&mx<165&&my>50&&my<64&&bt!=6)
+   {
+    pushbutton(150,50,165,64,"H",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(150,50,165,64,"H",BTCOLOR,BTBORDER,TXTCOLOR);
+    outtextxy(x,y,"H");
+    mv[btcount]='H';
+    x=x+10;
+    bt=6;
+    delay(100);
+    btcount++;
+   }
+   if(mx>175&&mx<190&&my>50&&my<64&&bt!=7)
+   {
+    pushbutton(175,50,190,64,"L",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(175,50,190,64,"L",BTCOLOR,BTBORDER,TXTCOLOR);
+    outtextxy(x,y,"L");
+    mv[btcount]='L';
+    x=x+10;
+    bt=7;
+    delay(100);
+    btcount++;
+   }
+   if(mx>205&&mx<220&&my>50&&my<64&&bt!=8)
+   {
+    pushbutton(205,50,220,64,"M",BTCOLOR,BTBORDER,TXTCOLOR);
+    delay(100);
+    button(205,50,220,64,"M",BTCOLOR,BTBORDER,TXTCOLOR);
+    outtextxy(x,y,"M");
+    mv[btcount]='M';
+    x=x+10;
+    bt=8;
+    delay(100);
+    btcount++;
+   }
+   bt=0;
+  }
+ }
+  x=545;
+  strptr=mv;
+  mnptr=strarray;
+  while(btcount!=0)
+  {
+   if(*strptr=='A')
+   {
+    strptr++;
+    if(*strptr=='B')
+    {
+     *mnptr='7';
+     mnptr++;
+     *mnptr='8';
+     outtextxy(545,y,"78");
+
+    }
+    if(*strptr=='C')
+    {
+     *mnptr='7';
+     mnptr++;
+     *mnptr='9';
+     outtextxy(545,y,"79");
+    }
+    if(*strptr=='D')
+    {
+     *mnptr='7';
+     mnptr++;
+     *mnptr='A';
+     outtextxy(545,y,"7A");
+    }
+    if(*strptr=='E')
+    {
+     *mnptr='7';
+     mnptr++;
+     *mnptr='B';
+     outtextxy(545,y,"7B");
+    }
+    if(*strptr=='H')
+    {
+     *mnptr='7';
+     mnptr++;
+     *mnptr='C';
+     outtextxy(545,y,"7C");
+    }
+    if(*strptr=='L')
+    {
+     *mnptr='7';
+     mnptr++;
+     *mnptr='D';
+     outtextxy(545,y,"7D");
+    }
+   }
+   y=y+15;
+  display(9);
+  break;
+ }
+}

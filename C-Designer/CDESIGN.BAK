@@ -1,0 +1,334 @@
+#include<winkid.h>
+#include<stdio.h>
+//#include<process.h>
+
+int quit,desg_flag;
+void welcome_screen();
+void main_screen();
+void draw_button();
+void create_usr_button();
+void desg_final();
+int finalise_design();
+void final_touch();
+int fin();
+
+int btenable,btns,fptr;
+int xvar,yvar,lenvar,higvar;
+
+void main()
+{
+ int gd=0,gm,m;
+ initgraph(&gd,&gm," ");
+ quit=0;
+ desg_flag=0;
+ btenable=1;
+ btns=0;
+ xvar=40;
+ yvar=20;
+ lenvar=90;
+ higvar=35;
+ //welcome_screen();
+ total_buttons=0;
+ total_textbox=0;
+ txt_select=0;
+ changes=0;
+ main_screen();
+ initmouse();
+ showmouse();
+ while(quit!=1)
+ {
+  if(ltbutton()==1)
+  {
+   mousepos(&mx,&my);
+   btmonitor(mx,my,btenable);
+  }
+ }
+}
+void welcome_screen()
+{
+ setfillstyle(10,1);
+ bar(0,0,639,479);
+ settextstyle(3,HORIZ_DIR,4);
+ setcolor(14);
+ outtextxy(100,160,"ASTRA :  C-DESIGNER");
+ settextstyle(0,0,0);
+ setcolor(2);
+ outtextxy(380,250,"MADE BY MRUNAL BHATT");
+ setcolor(12);
+ outtextxy(390,280,"CONTACT :=>+919822693522");
+ delay(4000);
+ cleardevice();
+}
+void exi()
+{
+ quit=1;
+}
+void main_screen()
+{
+ char *str;
+ int cou=0;
+ FILE *fp;
+ offmouse();
+ cleardevice();
+ setcolor(2);
+ rectangle(2,2,getmaxx()-2,getmaxy()-2);
+ setcolor(2);
+ rectangle(3,3,getmaxx()-3,getmaxy()-3);
+ setcolor(4);
+ rectangle(9,9,getmaxx()-9,250);
+ rectangle(8,8,getmaxx()-8,249);
+ setcolor(1);
+ rectangle(8,254,getmaxx()-8,getmaxy()-8);
+ rectangle(9,255,getmaxx()-9,getmaxy()-9);
+ total_buttons=0;
+ btenable=1;
+ button(0,30,20,80,25,"BUTTON",draw_button); //INCREMENT THE NUMBER OF TOTAL BUTTONS (IF MADE  0 THEN START FROM FIRST COUNT)
+ button(1,30,70,80,25,"POP-UP",exi);
+ button(2,30,120,80,25,"TEXTBOX",exi);
+ button(3,30,170,80,25,"MENUBAR",exi);
+
+ button(4,185,20,80,25,"MSG BOX",msgbox_yn);
+ button(5,185,70,100,25,"INPUT BOX",exi);
+ button(6,185,120,150,25,"DESIGN FINALIZE",desg_final);
+ button(7,185,170,150,25,"FINAL TOUCH",final_touch);
+
+ //button(8,125+95,20,80,25,"RESET",exi);
+// str=inputbox("This is an input box Enter any txt");
+ //setcolor(9);
+ showmouse();
+ /*while(*str!=NULL)
+ {
+  cou++;
+  str++;
+ }
+ printf("%d",cou);*/
+ //outtextxy(290,350,str);
+ //msgbox_yn("Hi this is Computer ",250,90);
+ /*if(fp=fopen("cdesin.tmpc","rt")==NULL)
+ {
+  msgbox_ok("CANNOT OPEN TEMP FILE",250,90);
+  exi();
+ } */
+
+}
+void draw_button()
+{
+ FILE *fp;
+ char ch;
+ if((fp=fopen("design.c","r"))==NULL)
+ {
+  fp=fopen("design.c","w+");
+
+  fprintf(fp,"#include<stdio.h>");
+  fprintf(fp,"\n#include<conio.h>");
+  fprintf(fp,"\n#include<winkid.h>\n\n");
+
+  // create_usr_button();
+ }
+ create_usr_button();
+}
+void dash()
+{
+ msgbox_ok("THIS IS A TEST ",150,90);
+}
+void create_usr_button()
+{
+ int dusty=0,ex=0,i=0;
+
+ char text[15],text2[15]="btn",st[]="design()",st2[8],ch,xv[8],yv[8],lv[8],hv[8];
+ int tvx,tvy,tl,th;
+ FILE *fpp;
+ cleardevice();
+ offmouse();
+ btenable=0;
+ tvx=xvar;
+ tvy=yvar;
+ tl=lenvar;
+ th=higvar;
+ xvar=40;
+ yvar=20;
+ lenvar=70;
+ higvar=35;
+ for(i=0;i<=btns;i++)
+ {
+
+  //total_buttons=0;
+  itoa(i,st2,10);
+  strcat(text2,st2);
+  //printf("%s   ",text);
+  button(i,xvar,yvar,lenvar,higvar,text2,dash);
+  xvar=xvar+85;
+  strcpy(text,NULL);
+  if(yvar>420)
+   yvar=yvar+50;
+ }
+  showmouse();
+
+ xvar=tvx;
+ yvar=tvy;
+ lenvar=tl;
+ higvar=th;
+ itoa(btns,st2,10);
+ strcpy(text2,"btn");
+ strcat(text2,st2);
+
+ if(btns==0)
+ {
+   fpp=fopen("design.c","r+");
+  fptr=58;
+  fseek(fpp,fptr,0);
+  fprintf(fpp,"\nvoid butns()\n{");
+  fptr=fptr+20;
+  fclose(fpp);
+ }
+  fpp=fopen("design.c","a+");
+  gotoxy(5,20);
+	       printf("Enter the x-position of button   ");clreol();
+	       scanf("%d",&xvar);
+	       gotoxy(5,20);
+	       clreol();
+	       setfillstyle(1,0);
+	       floodfill(300,310,0);
+	       gotoxy(5,20);
+	       printf("Enter the y-position of button   ");clreol();
+	       scanf("%d",&yvar);
+	       gotoxy(5,20);
+	       clreol();
+	       setfillstyle(1,0);
+	       floodfill(300,310,0);
+	       gotoxy(5,20);
+	       printf("Enter the text of button  ");clreol();
+	       scanf("%s",text);
+	       gotoxy(5,20);
+	       clreol();
+	       setfillstyle(1,0);
+	       floodfill(300,310,0);
+
+  itoa(btns,st2,10);
+  itoa(xvar,xv,10);
+  itoa(yvar,yv,10);
+  itoa(lenvar,lv,10);
+  itoa(higvar,hv,10);
+   // writing buttons to the file 'design.c'
+  fprintf(fpp,"\nbutton(%s,%s,%s,%s,%s,\"%s\",%s); ",st2,xv,yv,lv,hv,text,text2);
+  strcpy(text2,NULL);
+  fptr=fptr+30;
+  fseek(fpp,fptr,0);
+  printf("%d ",btns);
+ btns++;
+ xvar=xvar+110;
+ if(yvar>420)
+ {
+  yvar=yvar+50;
+ }
+
+  getch();
+ fclose(fpp);
+ //rewind(fpp);
+ main_screen();
+}
+void desg_final()
+{
+ int ft=0;
+ if(finalise_design()==0)
+ {
+  printf("SORRY ERROR FINALISING DESIGN !!\n");
+  printf("DELETE 'DESIGN.C' AND START AGAIN ");
+ }
+ else
+ {
+  gotoxy(5,20);
+  printf("THE DESIGN FINALIZED AND READY TO USE \n\n\n");clreol();
+	       getch();
+	       gotoxy(5,20);
+	       clreol();
+	       setfillstyle(1,0);
+	       floodfill(300,310,0);
+
+ // printf("NOW TAKE 'RUN.C' IN TC.EXE AND COMPILE AND RUN ");
+ // getch();
+  //exit(0);
+ }
+}
+int finalise_design()
+{
+  FILE *fpp;
+  int ret=0;
+  if((fpp=fopen("design.c","r"))==NULL)
+ {
+  printf("\n\nSORRY THE FILE DESIGN.C IS NOT CREATED !!\n\n");
+  printf("press any key ");
+  getch();
+  ret=0;
+ }
+ else
+ {
+  if(desg_flag==0)
+  {
+   fpp=fopen("design.c","a+");
+   fprintf(fpp,"\n}");
+   fprintf(fpp,"\nvoid design()\n{ ");
+   if(btns!=0)
+   {
+    fprintf(fpp,"\nbutns();");
+   }
+   fprintf(fpp,"\n\n}");
+   desg_flag=1;
+   ret=1;
+   fclose(fpp);
+   return ret;
+  }
+  else
+  {
+   printf("\n\nDESIGN ALREADY FINALIZED!!!");
+  }
+ }
+}
+void final_touch()
+{
+ if(fin()==0)
+ {
+  printf("SORRY ERROR IN FINAL TOUCH \n");
+  printf("DELETE RUN.C and DESIGN.C and START AGAIN \n");
+  exit(1);
+ }
+ else
+ {
+  printf("DESIGN IS READY TO USE \n\n");
+  printf("OPEN TC.EXE AND COMPILE AND RUN 'RUN.C' \n\n");
+  printf("\n\npress any key ... ");
+  exit(1);
+ }
+}
+int fin()
+{
+ FILE *run;
+ if((run=fopen("design.c","r"))==NULL)
+ {
+  printf("\n\nSORRY THE FILE DESIGN.C IS NOT CREATED !!\n\n");
+  printf("press any key ");
+  getch();
+  return 0;
+ }
+ else
+ {
+  run=fopen("run.c","w+");
+  fprintf(run,"#include<graphics.h>\n");
+  fprintf(run,"#include\"design.c\"\n");
+  fprintf(run,"\nvoid main()\n{ ");
+  fprintf(run,"\nint gd=0,gm;\n");
+  fprintf(run,"\ninitgraph(&gd,&gm,\" \");");
+  fprintf(run,"\ndesign();");
+  fprintf(run,"\ninitms");
+  if(btns!=0)
+  {
+   fprintf(run,"\nmstwhl");
+   fprintf(run,"\nltbtpr");
+   fprintf(run,"\n\nchkmspos");
+   fprintf(run,"\nbtmonitor(mx,my,1);");
+   fprintf(run,"\n\n}");
+   fprintf(run,"\n\n}");
+  }
+ fprintf(run,"\n\n}");
+ }
+}
